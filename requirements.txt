@@ -1,0 +1,7 @@
+# Pinned to the last FSRS-5 (19-parameter) release on purpose.
+# fsrs>=6.0.0 switched to FSRS-6 (21 parameters), which would not match
+# the 19-slot w0-w18 schema built into the "FSRS Config" Notion database.
+# If you ever migrate the Notion side to FSRS-6, bump this and update
+# optimize_fsrs.py's 19 -> 21 check, plus the Notion formulas.
+fsrs[optimizer]==5.1.3
+requests==2.32.3

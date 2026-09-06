@@ -1,0 +1,28 @@
+name: Optimize FSRS weights
+
+on:
+  workflow_dispatch: {}   # lets you click "Run workflow" manually in the Actions tab
+  schedule:
+    - cron: "30 0 * * *"  # 00:30 UTC = 06:00 IST, daily
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run optimizer
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          REVIEW_LOG_DATA_SOURCE_ID: ${{ secrets.REVIEW_LOG_DATA_SOURCE_ID }}
+          FSRS_CONFIG_PAGE_ID: ${{ secrets.FSRS_CONFIG_PAGE_ID }}
+        run: python optimize_fsrs.py
